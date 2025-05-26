@@ -2,20 +2,19 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
     /**
-     * The attributes that are mass assignable.
+     * Атрибути, доступні для масового заповнення.
      *
-     * @var list<string>
+     * @var array<int, string>
      */
     protected $fillable = [
         'name',
@@ -24,9 +23,9 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
+     * Атрибути, які приховуються при серіалізації.
      *
-     * @var list<string>
+     * @var array<int, string>
      */
     protected $hidden = [
         'password',
@@ -34,15 +33,58 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * Приведення типів атрибутів.
      *
-     * @return array<string, string>
+     * @var array<string, string>
      */
-    protected function casts(): array
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+    ];
+
+    /**
+     * Зв'язок "багато-до-багатьох" з ролями.
+     *
+     * @return BelongsToMany
+     */
+    public function roles(): BelongsToMany
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        return $this->belongsToMany(Role::class);
     }
+
+    /**
+     * Перевіряє, чи має користувач вказані роль(і) за slug.
+     *
+     * @param  string|array<string>  $slugs
+     * @return bool
+     */
+    public function hasRole(string|array $slugs): bool
+    {
+        $slugs = (array) $slugs;
+
+        return $this->roles()->whereIn('slug', $slugs)->exists();
+    }
+
+    /**
+     * Перевіряє, чи має користувач доступ до ресурсу.
+     *
+     * @param  string  $resource
+     * @return bool
+     */
+    public function hasPermission(string $resource): bool
+    {
+        // Якщо є супер-адмін, даємо доступ до всього
+        if ($this->hasRole('super-admin')) {
+            return true;
+        }
+
+        foreach ($this->roles as $role) {
+            if (in_array($resource, $role->permissions ?? [], true)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }
