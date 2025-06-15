@@ -22,12 +22,12 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
-use App\Filament\Resources\{
-    ContactInfoResource,
+use App\Filament\Resources\{ContactInfoResource,
     PartnerResource,
     GalleryImageResource,
     NewsResource,
     PostResource,
+    PracticalCategoryResource,
     PracticeResource,
     TeamMemberResource,
     HistoryEventResource,
@@ -94,6 +94,7 @@ class AdminPanelProvider extends PanelProvider
                 InstructorResource::class,
 
                 // Course Topics
+                PracticalCategoryResource::class,
                 CourseTopicResource::class,
                 CourseRequirementResource::class,
 

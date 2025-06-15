@@ -6,14 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class ContactInfo extends Model
 {
-    // Якщо назва таблиці за конвенцією: snake_case plural,
-    // можна не вказувати $table, але в нашому випадку таблиця називається contact_info:
-    protected $table = 'contact_info';
+    protected $table = 'contact_infos'; // або залиш, якщо в тебе реально назва таблиці singular (але краще plural)
 
-    // Поля, доступні для масового заповнення
-    protected $fillable = [
-        'phone',
-        'address',
-        'email',
-    ];
+    protected $fillable = ['name', 'email', 'phone', 'message'];
+
 }

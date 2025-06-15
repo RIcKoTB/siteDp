@@ -10,9 +10,10 @@ class NewsController extends Controller
 {
     public function index()
     {
-        $news = News::orderBy('date', 'desc')->get();
+        $news = News::orderBy('date', 'desc')->paginate(9); // Кількість новин на сторінку
         return view('news', compact('news'));
     }
+
 
     public function show(News $news)
     {
@@ -23,7 +24,7 @@ class NewsController extends Controller
         $comments = $news->comments()
             ->with('replies')
             ->whereNull('parent_id')
-            ->get();
+            ->paginate(9);
 
         return view('news.show', compact('news', 'comments'));
     }

@@ -4,9 +4,9 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ContactInfoResource\Pages;
 use App\Models\ContactInfo;
-use Filament\Forms;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Textarea;
 use Filament\Resources\Resource;
 use Filament\Tables\Table;
 use Filament\Tables;
@@ -22,21 +22,26 @@ class ContactInfoResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('phone')
-                    ->label('Телефон')
+                TextInput::make('name')
+                    ->label('Ім’я')
                     ->required()
-                    ->maxLength(50),
-
-                TextInput::make('address')
-                    ->label('Адреса')
-                    ->required()
-                    ->maxLength(255),
+                    ->maxLength(100),
 
                 TextInput::make('email')
                     ->label('Email')
                     ->email()
                     ->required()
                     ->maxLength(100),
+
+                TextInput::make('phone')
+                    ->label('Телефон')
+                    ->required()
+                    ->maxLength(20),
+
+                Textarea::make('message')
+                    ->label('Повідомлення')
+                    ->required()
+                    ->rows(6),
             ]);
     }
 
@@ -45,14 +50,15 @@ class ContactInfoResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('id')->label('ID')->sortable(),
-                TextColumn::make('phone')->label('Телефон')->sortable()->searchable(),
-                TextColumn::make('address')->label('Адреса')->sortable()->searchable(),
-                TextColumn::make('email')->label('Email')->sortable()->searchable(),
-                TextColumn::make('created_at')->label('Створено')->dateTime(),
-                TextColumn::make('updated_at')->label('Оновлено')->dateTime(),
+                TextColumn::make('name')->label('Ім’я')->searchable(),
+                TextColumn::make('email')->label('Email')->searchable(),
+                TextColumn::make('phone')->label('Телефон')->searchable(),
+                TextColumn::make('message')->label('Повідомлення')->limit(50)->wrap(),
+                TextColumn::make('created_at')->label('Надіслано')->dateTime(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),

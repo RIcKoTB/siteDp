@@ -5,18 +5,26 @@
     <title>@yield('title', 'Мій Сайт')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const toggle = document.getElementById('menu-toggle');
+            const nav = document.querySelector('.main-nav');
+            toggle.addEventListener('click', () => nav.classList.toggle('active'));
+        });
+    </script>
 </head>
 <body>
 
-<!-- HEADER -->
 <header class="site-header">
     <div class="container header-inner">
         <a href="/" class="logo">
             <img src="{{ asset('storage/images/logo.png') }}" alt="Логотип" class="logo-img">
             <span class="logo-text">ЦК ПІТ</span>
         </a>
-        <nav class="main-nav">
+
+        <div id="menu-toggle" class="menu-toggle">&#9776;</div>
+
+        <nav class="main-nav" id="mainNav">
             <a href="/">Головна</a>
             <a href="/about">Про нас</a>
             <a href="/news">Новини</a>
@@ -30,7 +38,7 @@
             </div>
 
             <div class="dropdown">
-                <a href="#">Практична ▾</a>
+                <a href="#">Освітні компоненти ▾</a>
                 <div class="dropdown-menu">
                     <a href="/public/view/practice_programming.html">Програмування</a>
                     <a href="/public/view/practice_db.html">Бази даних</a>
@@ -39,27 +47,26 @@
             </div>
 
             <div class="dropdown">
-                <a href="#">Курсові/Диплом ▾</a>
+                <a href="#">Практична підготовка ▾</a>
                 <div class="dropdown-menu">
-                    <a href="/public/view/projects_course.html">Курсові роботи</a>
-                    <a href="/public/view/projects_diploma.html">Дипломне проєктування</a>
+                    @foreach ($practicalCategories as $category)
+                        <a href="{{ route('practical.category', $category->slug) }}">
+                            {{ $category->title }}
+                        </a>
+                    @endforeach
                 </div>
             </div>
 
+
             <a href="/public/view/graduates.html">Випускники</a>
         </nav>
-
     </div>
 </header>
 
-
-
-<!-- MAIN CONTENT -->
 <main class="site-main">
     @yield('content')
 </main>
 
-<!-- FOOTER -->
 <footer class="site-footer">
     <div class="container">
         &copy; {{ date('Y') }} Мій Сайт. Усі права захищено.
