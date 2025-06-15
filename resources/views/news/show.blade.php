@@ -37,6 +37,24 @@
                     </div>
                 </div>
             @endif
+
+            @if (!empty($news->attachments) && is_array($news->attachments))
+                <div class="news-attachments" style="margin-top: 40px;">
+                    <h3>📎 Прикріплені файли</h3>
+                    <ul style="padding-left: 20px;">
+                        @foreach ($news->attachments as $attachment)
+                            <li style="margin-bottom: 8px;">
+                                <a href="{{ asset('storage/' . $attachment['file']) }}" target="_blank" style="color: #1e40af; text-decoration: underline;">
+                                    {{ basename($attachment['file']) }}
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+
+
             <p style="color: #777;">👁️ Переглядів: {{ $news->views }}</p>
 
             <hr style="margin: 60px 0;">

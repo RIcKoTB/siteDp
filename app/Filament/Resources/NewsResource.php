@@ -4,21 +4,22 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\NewsResource\Pages;
 use App\Models\News;
-use Filament\Forms;
-use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\RichEditor;
-use Filament\Forms\Components\Repeater;
-use Filament\Forms\Components\Grid;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Forms\Components\{
+    DatePicker,
+    FileUpload,
+    TextInput,
+    Textarea,
+    RichEditor,
+    Repeater
+};
 use Filament\Tables\Table;
 use Filament\Tables;
-use Filament\Forms\Components\TrixEditor;
-use Filament\Tables\Columns\ImageColumn;
-use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\{
+    ImageColumn,
+    TextColumn
+};
 
 class NewsResource extends Resource
 {
@@ -30,18 +31,50 @@ class NewsResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('title')->label('Заголовок')->required()->maxLength(255),
-                DatePicker::make('date')->label('Дата')->required(),
-                FileUpload::make('img_path')->label('Головне зображення')->image()->directory('news')->required(),
-                TextInput::make('url')->label('URL (slug або повний шлях)')->required()->maxLength(255),
+                TextInput::make('title')
+                    ->label('Заголовок')
+                    ->required()
+                    ->maxLength(255),
 
-                TrixEditor::make('content')
-                    ->label('Основний контент')
-                    ->columnSpanFull()
-                    ->attachmentDisk('public')
-                    ->attachmentDirectory('news/files')
-                    ->attachFiles()
+                DatePicker::make('date')
+                    ->label('Дата')
                     ->required(),
+
+                FileUpload::make('img_path')
+                    ->label('Головне зображення')
+                    ->image()
+                    ->directory('news')
+                    ->required(),
+
+                TextInput::make('url')
+                    ->label('URL (slug або повний шлях)')
+                    ->required()
+                    ->maxLength(255),
+
+                RichEditor::make('content')
+                    ->label('Основний контент')
+                    ->required()
+                    ->columnSpanFull(),
+
+                Repeater::make('attachments')
+                    ->label('Документи')
+                    ->schema([
+                        FileUpload::make('file')
+                            ->label('Файл')
+                            ->directory('news/files')
+                            ->preserveFilenames()
+                            ->downloadable()
+                            ->acceptedFileTypes([
+                                'application/pdf',
+                                'application/msword',
+                                'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                            ]),
+                        TextInput::make('label')
+                            ->label('Назва файлу')
+                    ])
+                    ->default([])
+                    ->columnSpanFull(),
 
                 Repeater::make('gallery')
                     ->label('Галерея зображень')
@@ -64,7 +97,6 @@ class NewsResource extends Resource
                     ->disabled(),
             ]);
     }
-
 
     public static function table(Table $table): Table
     {

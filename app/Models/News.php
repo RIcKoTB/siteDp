@@ -15,12 +15,14 @@ class News extends Model
         'url',
         'views',
         'content',
-        'gallery', // 🆕 додано
-    ];
-    protected $casts = [
-        'gallery' => 'array',
+        'gallery',      // 🖼 Галерея зображень
+        'attachments',  // 📎 Додані файли
     ];
 
+    protected $casts = [
+        'gallery'     => 'array',
+        'attachments' => 'array',
+    ];
 
     public function comments()
     {
@@ -32,7 +34,6 @@ class News extends Model
         return asset("storage/{$this->img_path}");
     }
 
-    // ➕ Метод для інкременту переглядів
     public function incrementViews(): void
     {
         $this->increment('views');
