@@ -5,6 +5,7 @@ namespace App\Providers\Filament;
 use App\Filament\Resources\ServiceResource;
 use App\Filament\Resources\UserResource;
 use App\Filament\Resources\RoleResource;
+use App\Models\PracticeResourcess;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -20,6 +21,33 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+
+use App\Filament\Resources\{
+    ContactInfoResource,
+    PartnerResource,
+    GalleryImageResource,
+    NewsResource,
+    PostResource,
+    PracticeResource,
+    TeamMemberResource,
+    HistoryEventResource,
+    CoreValueResource,
+    AlumniResource,
+    TestimonialResource,
+    PracticeModuleResource,
+    PracticeScheduleResource,
+    ProgramOverviewResource,
+    InstructorResource,
+    CourseTopicResource,
+    CourseRequirementResource,
+    DiplomaTopicResource,
+    DiplomaRequirementResource,
+    DiplomaTimelineResource,
+    DiplomaLinkResource,
+    FaqResource,
+    SurveyCategoryResource,
+    CommentResource,
+    SurveyResponseResource};
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -38,6 +66,50 @@ class AdminPanelProvider extends PanelProvider
                 UserResource::class,
                 RoleResource::class,
                 ServiceResource::class,
+
+                // Контент
+                ContactInfoResource::class,
+                PartnerResource::class,
+                GalleryImageResource::class,
+                NewsResource::class,
+                PostResource::class,
+                CommentResource::class,
+
+                // About / Team / History
+                TeamMemberResource::class,
+                HistoryEventResource::class,
+                CoreValueResource::class,
+
+                // Alumni
+                AlumniResource::class,
+                TestimonialResource::class,
+
+                // Практика
+                PracticeModuleResource::class,
+                PracticeScheduleResource::class,
+                PracticeResource::class,
+
+                // Program / OPP
+                ProgramOverviewResource::class,
+                InstructorResource::class,
+
+                // Course Topics
+                CourseTopicResource::class,
+                CourseRequirementResource::class,
+
+                // Diploma
+                DiplomaTopicResource::class,
+                DiplomaRequirementResource::class,
+                DiplomaTimelineResource::class,
+                DiplomaLinkResource::class,
+
+                // FAQ
+                FaqResource::class,
+
+                // Survey
+                SurveyCategoryResource::class,
+                SurveyResponseResource::class,
+
             ])
             ->pages([
                 Pages\Dashboard::class,
