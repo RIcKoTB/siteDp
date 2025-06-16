@@ -1,0 +1,153 @@
+/* === HERO === */
+.hero-section {
+    background: linear-gradient(to right, #2563eb, #1e40af);
+    color: white;
+    padding: 5rem 1rem;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+.hero-section h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+}
+.hero-section p {
+    font-size: 1.1rem;
+    color: #cbd5e1;
+}
+
+/* === SECTION CONTAINER === */
+.section {
+    padding: 4rem 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.section h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid #e5e7eb;
+    padding-bottom: 0.5rem;
+}
+
+/* === TOPIC CARDS === */
+.topics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+.topic-card {
+    background: #f9fafb;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.topic-card:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+.topic-card h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+.topic-card p {
+    font-size: 0.9rem;
+    color: #6b7280;
+}
+.topic-card a {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: #2563eb;
+    text-align: right;
+}
+
+/* === TABLES === */
+.table-wrapper {
+    overflow-x: auto;
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+th, td {
+    padding: 0.75rem 1rem;
+    border: 1px solid #e5e7eb;
+}
+th {
+    background-color: #f3f4f6;
+    text-align: left;
+    font-weight: 600;
+}
+tr:hover td {
+    background-color: #f9fafb;
+}
+.status-approved {
+    color: #16a34a;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* === CONSULTATION LIST === */
+.consultation-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 0.9rem;
+    color: #374151;
+}
+.consultation-item:last-child {
+    border-bottom: none;
+}
+
+/* === FORM SUBMISSION === */
+.custom-form {
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+    padding: 2rem;
+}
+.custom-form input,
+.custom-form textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+.custom-form button {
+    background-color: #2563eb;
+    color: white;
+    padding: 0.75rem 2rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+.custom-form button:hover {
+    background-color: #1d4ed8;
+}
+
+/* === LITERATURE LIST === */
+.literature-list {
+    padding-left: 1.2rem;
+}
+.literature-list li {
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+.literature-list a {
+    color: #2563eb;
+    text-decoration: underline;
+}

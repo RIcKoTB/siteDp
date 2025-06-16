@@ -2,6 +2,9 @@
 
 namespace App\Providers\Filament;
 
+use Filament\Resources\Resource;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File;
 use App\Filament\Resources\ServiceResource;
 use App\Filament\Resources\UserResource;
 use App\Filament\Resources\RoleResource;
@@ -62,56 +65,8 @@ class AdminPanelProvider extends PanelProvider
                 'primary' => Color::Amber,
             ])
             // Явна реєстрація ресурсів з правильного неймспейсу
-            ->resources([
-                UserResource::class,
-                RoleResource::class,
-                ServiceResource::class,
+            ->resources($this->discoverResources(app_path('Filament/Resources')))
 
-                // Контент
-                ContactInfoResource::class,
-                PartnerResource::class,
-                GalleryImageResource::class,
-                NewsResource::class,
-                PostResource::class,
-                CommentResource::class,
-
-                // About / Team / History
-                TeamMemberResource::class,
-                HistoryEventResource::class,
-                CoreValueResource::class,
-
-                // Alumni
-                AlumniResource::class,
-                TestimonialResource::class,
-
-                // Практика
-                PracticeModuleResource::class,
-                PracticeScheduleResource::class,
-                PracticeResource::class,
-
-                // Program / OPP
-                ProgramOverviewResource::class,
-                InstructorResource::class,
-
-                // Course Topics
-                PracticalCategoryResource::class,
-                CourseTopicResource::class,
-                CourseRequirementResource::class,
-
-                // Diploma
-                DiplomaTopicResource::class,
-                DiplomaRequirementResource::class,
-                DiplomaTimelineResource::class,
-                DiplomaLinkResource::class,
-
-                // FAQ
-                FaqResource::class,
-
-                // Survey
-                SurveyCategoryResource::class,
-                SurveyResponseResource::class,
-
-            ])
             ->pages([
                 Pages\Dashboard::class,
             ])
@@ -134,4 +89,23 @@ class AdminPanelProvider extends PanelProvider
                 Authenticate::class,
             ]);
     }
+
+    protected function discoverResources(string $directory): array
+    {
+        $resources = [];
+
+        foreach (File::allFiles($directory) as $file) {
+            $relativePath = $file->getRelativePathname(); // eg: Practical/TestLinkResource.php
+            $class = str_replace(['/', '.php'], ['\\', ''], $relativePath);
+            $fqcn = 'App\\Filament\\Resources\\' . $class;
+
+            if (class_exists($fqcn) && is_subclass_of($fqcn, \Filament\Resources\Resource::class)) {
+                $resources[] = $fqcn;
+            }
+        }
+
+        return $resources;
+    }
+
+
 }

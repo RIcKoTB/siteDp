@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\PracticalCategory;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 
 class PracticalController extends Controller
 {
@@ -13,8 +15,26 @@ class PracticalController extends Controller
         return view('practical.index', compact('categories'));
     }
 
-    public function show(PracticalCategory $category)
+    public function show($slug)
     {
-        return view('practical.show', compact('category'));
+        $category = PracticalCategory::where('slug', $slug)->firstOrFail();
+        $prefix = Str::slug($category->slug);
+
+        $tables = [
+            'topics' => "{$prefix}_topics",
+            'requirements' => "{$prefix}_requirements",
+            'timelines' => "{$prefix}_timelines",
+            'links' => "{$prefix}_links",
+        ];
+
+        $data = [];
+
+        foreach ($tables as $key => $table) {
+            $data[$key] = Schema::hasTable($table)
+                ? DB::table($table)->get()
+                : collect();
+        }
+
+        return view('practical.show', compact('category', 'data'));
     }
 }
