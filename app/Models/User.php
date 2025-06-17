@@ -20,6 +20,11 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'google_id',
+        'avatar',
+        'role',
+        'group',
+        'phone',
     ];
 
     /**
@@ -85,6 +90,39 @@ class User extends Authenticatable
         }
 
         return false;
+    }
+
+    // Методи для простих ролей
+    public function isStudent(): bool
+    {
+        return $this->role === 'student';
+    }
+
+    public function isTeacher(): bool
+    {
+        return $this->role === 'teacher';
+    }
+
+    public function isAdminRole(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    // Перевірка домену email
+    public function hasValidStudentEmail(): bool
+    {
+        return str_ends_with($this->email, '@student.uzhnu.edu.ua');
+    }
+
+    // Зв'язки для практичної підготовки
+    public function studentApplications()
+    {
+        return $this->hasMany(\App\Models\StudentApplication::class, 'student_email', 'email');
+    }
+
+    public function teacherTopics()
+    {
+        return $this->hasMany(\App\Models\PracticalTopic::class, 'teacher_id');
     }
 
 }

@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use App\Observers\PracticalCategoryObserver;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use App\Models\PracticalCategory;
@@ -26,8 +25,6 @@ class AppServiceProvider extends ServiceProvider
         View::composer('*', function ($view) {
             $view->with('practicalCategories', PracticalCategory::orderBy('title')->get());
         });
-
-        PracticalCategory::observe(PracticalCategoryObserver::class);
 
     }
 }
