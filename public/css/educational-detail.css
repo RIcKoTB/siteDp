@@ -1,0 +1,470 @@
+/* Educational Component Detail Styles */
+
+/* Hero Section */
+.component-hero {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+.breadcrumb {
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.breadcrumb a {
+    color: white;
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb span {
+    margin: 0 0.5rem;
+}
+
+.component-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 1rem 0;
+    line-height: 1.2;
+}
+
+.component-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.component-stats {
+    display: flex;
+    gap: 2rem;
+    margin-top: 1.5rem;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-value {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+/* Content Grid */
+.component-content {
+    padding: 3rem 0;
+}
+
+.content-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3rem;
+}
+
+/* Main Content */
+.main-content {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.content-block {
+    padding: 2rem;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.content-block:last-child {
+    border-bottom: none;
+}
+
+.content-block h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.content-text {
+    color: #495057;
+    line-height: 1.7;
+    font-size: 1rem;
+}
+
+.content-html {
+    color: #495057;
+    line-height: 1.7;
+}
+
+.content-html h1,
+.content-html h2,
+.content-html h3,
+.content-html h4,
+.content-html h5,
+.content-html h6 {
+    color: #2c3e50;
+    margin: 1.5rem 0 1rem 0;
+}
+
+.content-html ul,
+.content-html ol {
+    margin: 1rem 0;
+    padding-left: 2rem;
+}
+
+.content-html li {
+    margin: 0.5rem 0;
+}
+
+.outcomes-list,
+.assessment-list {
+    list-style: none;
+    padding: 0;
+}
+
+.outcomes-list li,
+.assessment-list li {
+    background: #f8f9fa;
+    padding: 1rem;
+    margin: 0.5rem 0;
+    border-radius: 8px;
+    border-left: 4px solid #667eea;
+    position: relative;
+}
+
+.outcomes-list li:before {
+    content: "🎓";
+    margin-right: 0.5rem;
+}
+
+.assessment-list li:before {
+    content: "📊";
+    margin-right: 0.5rem;
+}
+
+/* Literature */
+.literature-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.literature-item {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 4px solid #28a745;
+}
+
+.literature-item h4 {
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.literature-item .author,
+.literature-item .year {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin: 0.25rem 0;
+}
+
+.book-type {
+    background: #28a745;
+    color: white;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+/* Schedule Table */
+.schedule-table {
+    overflow-x: auto;
+}
+
+.schedule-table table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.schedule-table th,
+.schedule-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.schedule-table th {
+    background: #667eea;
+    color: white;
+    font-weight: 600;
+}
+
+.schedule-table tr:hover {
+    background: #f8f9fa;
+}
+
+/* Sidebar */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.sidebar-block {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    padding: 1.5rem;
+}
+
+.sidebar-block h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #f8f9fa;
+}
+
+.info-item:last-child {
+    border-bottom: none;
+}
+
+.info-item .label {
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.info-item .value {
+    color: #2c3e50;
+    font-weight: 500;
+}
+
+/* Teacher Info */
+.teacher-info h4 {
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+.teacher-info a {
+    color: #667eea;
+    text-decoration: none;
+}
+
+.teacher-info a:hover {
+    text-decoration: underline;
+}
+
+/* Related Components */
+.related-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.related-item {
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.related-item:hover {
+    background: #e9ecef;
+    transform: translateX(5px);
+}
+
+.related-item a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.related-item h4 {
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.related-item p {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .component-hero {
+        min-height: 300px;
+    }
+    
+    .component-header h1 {
+        font-size: 2rem;
+    }
+    
+    .component-stats {
+        gap: 1rem;
+    }
+    
+    .stat-value {
+        font-size: 1.5rem;
+    }
+    
+    .content-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .content-block {
+        padding: 1.5rem;
+    }
+    
+    .sidebar-block {
+        padding: 1rem;
+    }
+    
+    .info-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+    }
+}
+
+/* Methodical Materials */
+.methodical-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.methodical-item {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border-left: 4px solid #667eea;
+    transition: all 0.3s ease;
+}
+
+.methodical-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.methodical-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    gap: 1rem;
+}
+
+.methodical-header h4 {
+    color: #2c3e50;
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    flex: 1;
+}
+
+.material-type {
+    background: #667eea;
+    color: white;
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.material-description {
+    color: #6c757d;
+    margin: 0 0 1rem 0;
+    line-height: 1.6;
+    font-style: italic;
+}
+
+.material-meta {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.material-author,
+.material-year {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.material-actions {
+    margin-top: 1rem;
+}
+
+.material-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: #667eea;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.material-link:hover {
+    background: #5a6fd8;
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+}
+
+.link-icon {
+    font-size: 1rem;
+}
+
+.external-icon {
+    font-size: 0.8rem;
+    opacity: 0.8;
+}
+

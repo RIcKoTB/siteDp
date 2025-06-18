@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>@yield('title', 'Мій Сайт')</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <style>
@@ -239,6 +240,7 @@
     </script>
 
     @yield('scripts')
+    @stack("styles")
 </head>
 <body>
 
@@ -259,18 +261,20 @@
             <div class="dropdown">
                 <a href="#">ОПП ▾</a>
                 <div class="dropdown-menu">
-                    <a href="/public/view/program.html">Освітньо-професійна програма</a>
-                    <a href="/public/view/survey.html">Опитування</a>
+                    <a href="{{ route("programs.index") }}">Освітньо-професійна програма</a>
+                    <a href="{{ route("surveys.index") }}">Опитування</a>
                 </div>
-            </div>
-
+        </div>
             <div class="dropdown">
-                <a href="#">Освітні компоненти ▾</a>
-                <div class="dropdown-menu">
-                    <a href="/public/view/practice_programming.html">Програмування</a>
-                    <a href="/public/view/practice_db.html">Бази даних</a>
-                    <a href="/public/view/practice_web.html">Веб-розробка</a>
-                </div>
+                    <a href="{{ route('education.index') }}">Освітні компоненти ▾</a>
+                    <div class="dropdown-menu">
+                        <a href="{{ route('education.index') }}">Всі предмети</a>
+                        @foreach ($educationalCategories as $category)
+                            <a href="{{ route('education.category', $category->slug) }}">
+                                @if($category->icon){{ $category->icon }} @endif{{ $category->name }}
+                            </a>
+                        @endforeach
+                    </div>
             </div>
 
             <div class="dropdown">
@@ -281,8 +285,8 @@
                             {{ $category->title }}
                         </a>
                     @endforeach
-                </div>
-            </div>
+        </div>
+        </div>
 
 
             <a href="/public/view/graduates.html">Випускники</a>
@@ -331,5 +335,6 @@
     </div>
 </footer>
 
+    @stack("scripts")
 </body>
 </html>

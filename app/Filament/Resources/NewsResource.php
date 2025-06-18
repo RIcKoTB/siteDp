@@ -12,7 +12,8 @@ use Filament\Forms\Components\{
     TextInput,
     Textarea,
     RichEditor,
-    Repeater
+    Repeater,
+    Select
 };
 use Filament\Tables\Table;
 use Filament\Tables;
@@ -51,6 +52,17 @@ class NewsResource extends Resource
                     ->required()
                     ->maxLength(255),
 
+                Select::make('category')
+                    ->label('Категорія')
+                    ->options([
+                        'news' => '📰 Новини',
+                        'events' => '🎉 Події',
+                        'achievements' => '🏆 Досягнення',
+                        'announcements' => '📢 Оголошення',
+                    ])
+                    ->default('news')
+                    ->required(),
+
                 RichEditor::make('content')
                     ->label('Основний контент')
                     ->required()
@@ -68,12 +80,18 @@ class NewsResource extends Resource
                                 'application/pdf',
                                 'application/msword',
                                 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                                'application/vnd.ms-excel',
                                 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                                'text/plain',
                             ]),
-                        TextInput::make('label')
+                        TextInput::make('title')
                             ->label('Назва файлу')
+                            ->required(),
+                        Textarea::make('description')
+                            ->label('Опис')
+                            ->rows(2),
                     ])
-                    ->default([])
+                    ->collapsible()
                     ->columnSpanFull(),
 
                 Repeater::make('gallery')
@@ -82,19 +100,13 @@ class NewsResource extends Resource
                         FileUpload::make('image')
                             ->label('Зображення')
                             ->image()
-                            ->directory('news/gallery'),
-                        Textarea::make('caption')
-                            ->label('Підпис до зображення')
-                            ->rows(2)
+                            ->directory('news/gallery')
+                            ->required(),
+                        TextInput::make('caption')
+                            ->label('Підпис до зображення'),
                     ])
-                    ->default([])
+                    ->collapsible()
                     ->columnSpanFull(),
-
-                TextInput::make('views')
-                    ->label('Перегляди')
-                    ->numeric()
-                    ->default(0)
-                    ->disabled(),
             ]);
     }
 
@@ -102,11 +114,30 @@ class NewsResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('id')->label('ID')->sortable(),
                 TextColumn::make('title')->label('Заголовок')->searchable()->sortable(),
+                TextColumn::make('category')
+                    ->label('Категорія')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'news' => 'gray',
+                        'events' => 'success',
+                        'achievements' => 'warning',
+                        'announcements' => 'info',
+                        default => 'gray',
+                    })
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        'news' => '📰 Новини',
+                        'events' => '🎉 Події',
+                        'achievements' => '🏆 Досягнення',
+                        'announcements' => '📢 Оголошення',
+                        default => $state,
+                    })
+                    ->sortable(),
                 TextColumn::make('date')->label('Дата')->date()->sortable(),
                 ImageColumn::make('img_path')->label('Зображення')->square(),
                 TextColumn::make('views')->label('Перегляди')->sortable(),
+                TextColumn::make('likes_count')->label('Лайки')->sortable()->getStateUsing(fn ($record) => $record->likes()->count()),
+                TextColumn::make('comments_count')->label('Коментарі')->sortable()->getStateUsing(fn ($record) => $record->comments()->count()),
                 TextColumn::make('url')->label('Посилання')->wrap(),
                 TextColumn::make('created_at')->label('Створено')->dateTime(),
             ])
@@ -114,16 +145,25 @@ class NewsResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                ]),
             ]);
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            //
+        ];
     }
 
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListNews::route('/'),
+            'index' => Pages\ListNews::route('/'),
             'create' => Pages\CreateNews::route('/create'),
-            'edit'   => Pages\EditNews::route('/{record}/edit'),
+            'edit' => Pages\EditNews::route('/{record}/edit'),
         ];
     }
 }

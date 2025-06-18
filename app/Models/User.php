@@ -125,4 +125,10 @@ class User extends Authenticatable
         return $this->hasMany(\App\Models\PracticalTopic::class, 'teacher_id');
     }
 
+
+    // Зв'язок з коментарями
+    public function comments()
+    {
+        return $this->hasMany(\App\Models\Comment::class);
+    }
 }

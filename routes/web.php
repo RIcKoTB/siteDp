@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\EducationalProgramController;
+use App\Http\Controllers\SurveyController;
 use App\Http\Controllers\PracticalController;
 use App\Http\Controllers\Auth\GoogleController;
 use Illuminate\Support\Facades\Route;
@@ -56,6 +58,7 @@ Route::get('/news/{news}', [NewsController::class, 'show'])->name('news.show');
 
 Route::post('/news/{id}/comment', [NewsController::class, 'comment'])->name('news.comment');
 Route::post('/news/{id}/reply', [NewsController::class, 'reply'])->name('news.reply');
+Route::post('/news/{id}/like', [NewsController::class, 'like'])->name('news.like');
 use App\Http\Controllers\ContactController;
 
 Route::get('/contact', [ContactController::class, 'show'])->name('contact.show');
@@ -98,4 +101,26 @@ Route::get('/gallery', function () {
 
     return view('gallery', compact('photos'));
 })->name('gallery');
+
+
+// Тестовий роут для перевірки форми коментарів
+Route::get('/test-comment', function() {
+    return view('test-comment');
+});
+
+
+// Освітні компоненти
+Route::get('/education', [App\Http\Controllers\EducationalComponentController::class, 'index'])->name('education.index');
+Route::get('/education/{id}', [App\Http\Controllers\EducationalComponentController::class, 'show'])->name('education.show');
+Route::get('/education/category/{categorySlug}', [App\Http\Controllers\EducationalComponentController::class, 'byCategory'])->name('education.category');
+
+
+// Освітньо-професійні програми
+Route::get("/programs", [EducationalProgramController::class, "index"])->name("programs.index");
+Route::get("/programs/{id}", [EducationalProgramController::class, "show"])->name("programs.show");
+
+// Опитування
+Route::get("/surveys", [SurveyController::class, "index"])->name("surveys.index");
+Route::get("/surveys/{id}", [SurveyController::class, "show"])->name("surveys.show");
+Route::post("/surveys/{id}/submit", [SurveyController::class, "submit"])->name("surveys.submit");
 

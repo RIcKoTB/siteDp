@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Comment Form</title>
+    <meta name="csrf-token" content="test">
+</head>
+<body>
+    <h1>Test Comment Form</h1>
+    
+    <form action="http://localhost:8000/news/3/comment" method="POST">
+        <input type="hidden" name="_token" value="test">
+        <textarea name="content" rows="3" placeholder="Ваш коментар" required>Це тестовий коментар</textarea>
+        <br><br>
+        <button type="submit">Надіслати коментар</button>
+    </form>
+    
+    <script>
+        // Отримаємо CSRF токен з мета тегу
+        const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        document.querySelector('input[name="_token"]').value = token;
+    </script>
+</body>
+</html>
