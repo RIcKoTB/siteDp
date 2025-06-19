@@ -18,7 +18,11 @@ class CoreValueResource extends Resource
 {
     protected static ?string $model = CoreValue::class;
     protected static ?string $navigationIcon = 'heroicon-o-star';
-    protected static ?string $navigationGroup = 'About';
+    protected static ?string $navigationGroup = 'Про нас';
+
+    protected static ?string $navigationLabel = 'Наші цінності';
+
+    protected static ?string $pluralModelLabel = 'Наші цінності';
 
     public static function form(Form $form): Form
     {

@@ -15,14 +15,14 @@ class EducationalProgramResource extends Resource
     protected static ?string $model = EducationalProgram::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
-    
+
     protected static ?string $navigationLabel = 'Освітньо-професійні програми';
-    
+
     protected static ?string $modelLabel = 'освітньо-професійна програма';
-    
+
     protected static ?string $pluralModelLabel = 'освітньо-професійні програми';
-    
-    protected static ?string $navigationGroup = 'ОПП та Опитування';
+
+    protected static ?string $navigationGroup = 'ОПП';
 
     public static function form(Form $form): Form
     {
@@ -38,31 +38,31 @@ class EducationalProgramResource extends Resource
                                     ->required()
                                     ->maxLength(255)
                                     ->columnSpan(2),
-                                
+
                                 Forms\Components\TextInput::make('code')
                                     ->label('Код програми')
                                     ->required()
                                     ->maxLength(255)
                                     ->unique(ignoreRecord: true)
                                     ->placeholder('123 Комп\'ютерна інженерія'),
-                                
+
                                 Forms\Components\TextInput::make('qualification')
                                     ->label('Кваліфікація')
                                     ->placeholder('Бакалавр з комп\'ютерної інженерії')
                                     ->maxLength(255),
-                                
+
                                 Forms\Components\Textarea::make('description')
                                     ->label('Опис програми')
                                     ->required()
                                     ->rows(4)
                                     ->columnSpanFull(),
-                                
+
                                 Forms\Components\Textarea::make('objectives')
                                     ->label('Цілі програми')
                                     ->rows(4)
                                     ->columnSpanFull(),
                             ])->columns(2),
-                        
+
                         // Навчальні характеристики
                         Forms\Components\Tabs\Tab::make('Навчальні характеристики')
                             ->schema([
@@ -73,7 +73,7 @@ class EducationalProgramResource extends Resource
                                     ->minValue(1)
                                     ->maxValue(6)
                                     ->default(4),
-                                
+
                                 Forms\Components\TextInput::make('credits_total')
                                     ->label('Загальна кількість кредитів')
                                     ->required()
@@ -81,20 +81,20 @@ class EducationalProgramResource extends Resource
                                     ->minValue(180)
                                     ->maxValue(300)
                                     ->default(240),
-                                
+
                                 Forms\Components\Textarea::make('admission_requirements')
                                     ->label('Вимоги до вступу')
                                     ->rows(4)
                                     ->columnSpanFull()
                                     ->placeholder('Повна загальна середня освіта, ЗНО з математики та української мови...'),
-                                
+
                                 Forms\Components\Textarea::make('career_prospects')
                                     ->label('Перспективи кар\'єри')
                                     ->rows(4)
                                     ->columnSpanFull()
                                     ->placeholder('Програміст, системний адміністратор, аналітик...'),
                             ])->columns(2),
-                        
+
                         // Компетентності
                         Forms\Components\Tabs\Tab::make('Компетентності')
                             ->schema([
@@ -105,7 +105,7 @@ class EducationalProgramResource extends Resource
                                             ->label('Код')
                                             ->placeholder('ПК-1')
                                             ->required(),
-                                        
+
                                         Forms\Components\Textarea::make('description')
                                             ->label('Опис компетентності')
                                             ->required()
@@ -118,7 +118,7 @@ class EducationalProgramResource extends Resource
                                     ->reorderable()
                                     ->collapsible(),
                             ]),
-                        
+
                         // Результати навчання
                         Forms\Components\Tabs\Tab::make('Результати навчання')
                             ->schema([
@@ -129,7 +129,7 @@ class EducationalProgramResource extends Resource
                                             ->label('Код')
                                             ->placeholder('ПРН-1')
                                             ->required(),
-                                        
+
                                         Forms\Components\Textarea::make('description')
                                             ->label('Опис результату навчання')
                                             ->required()
@@ -142,7 +142,7 @@ class EducationalProgramResource extends Resource
                                     ->reorderable()
                                     ->collapsible(),
                             ]),
-                        
+
                         // Навчальний план
                         Forms\Components\Tabs\Tab::make('Навчальний план')
                             ->schema([
@@ -153,17 +153,17 @@ class EducationalProgramResource extends Resource
                                             ->label('Семестр')
                                             ->numeric()
                                             ->required(),
-                                        
+
                                         Forms\Components\TextInput::make('subject')
                                             ->label('Навчальна дисципліна')
                                             ->required()
                                             ->columnSpan(2),
-                                        
+
                                         Forms\Components\TextInput::make('credits')
                                             ->label('Кредити')
                                             ->numeric()
                                             ->required(),
-                                        
+
                                         Forms\Components\Select::make('type')
                                             ->label('Тип')
                                             ->options([
@@ -180,7 +180,7 @@ class EducationalProgramResource extends Resource
                                     ->reorderable()
                                     ->collapsible(),
                             ]),
-                        
+
                         // Налаштування
                         Forms\Components\Tabs\Tab::make('Налаштування')
                             ->schema([
@@ -189,11 +189,11 @@ class EducationalProgramResource extends Resource
                                     ->image()
                                     ->directory('educational-programs')
                                     ->columnSpanFull(),
-                                
+
                                 Forms\Components\Toggle::make('is_active')
                                     ->label('Активна програма')
                                     ->default(true),
-                                
+
                                 Forms\Components\TextInput::make('sort_order')
                                     ->label('Порядок сортування')
                                     ->numeric()
@@ -215,36 +215,36 @@ class EducationalProgramResource extends Resource
                     ->sortable()
                     ->badge()
                     ->color('primary'),
-                
+
                 Tables\Columns\TextColumn::make('title')
                     ->label('Назва програми')
                     ->searchable()
                     ->sortable()
                     ->limit(50),
-                
+
                 Tables\Columns\TextColumn::make('qualification')
                     ->label('Кваліфікація')
                     ->limit(30)
                     ->toggleable(),
-                
+
                 Tables\Columns\TextColumn::make('duration_years')
                     ->label('Тривалість')
                     ->alignCenter()
                     ->badge()
                     ->color('info')
                     ->formatStateUsing(fn ($state) => $state . ' р.'),
-                
+
                 Tables\Columns\TextColumn::make('credits_total')
                     ->label('Кредити')
                     ->alignCenter()
                     ->badge()
                     ->color('success'),
-                
+
                 Tables\Columns\IconColumn::make('is_active')
                     ->label('Активна')
                     ->boolean()
                     ->alignCenter(),
-                
+
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Створено')
                     ->dateTime('d.m.Y H:i')

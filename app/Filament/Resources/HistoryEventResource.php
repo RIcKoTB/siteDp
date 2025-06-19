@@ -16,7 +16,11 @@ class HistoryEventResource extends Resource
 {
     protected static ?string $model = HistoryEvent::class;
     protected static ?string $navigationIcon = 'heroicon-o-clock';
-    protected static ?string $navigationGroup = 'About';
+    protected static ?string $navigationGroup = 'Про нас';
+
+    protected static ?string $navigationLabel = 'Наша історія';
+
+    protected static ?string $pluralModelLabel = 'Наша історія';
 
     public static function form(Form $form): Form
     {
