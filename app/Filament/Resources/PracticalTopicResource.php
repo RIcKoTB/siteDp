@@ -63,6 +63,7 @@ class PracticalTopicResource extends Resource
                                     'name' => $data['name'],
                                     'email' => $data['email'],
                                     'role' => 'teacher',
+                                'password' => null, // Для викладачів створених через адмін панель
                                     'email_verified_at' => now(),
                                 ])->id;
                             }),

@@ -1,0 +1,65 @@
+🔧 ЗВІТ ПРО ВИПРАВЛЕННЯ БАЗИ ДАНИХ
+=====================================
+
+❌ ПРОБЛЕМА:
+Table 'site_dp_back.practical_topics' doesn't exist
+
+🔍 ПРИЧИНА:
+Таблиця practical_topics була випадково видалена або не створена 
+під час виконання міграцій.
+
+✅ ВИПРАВЛЕННЯ:
+1. Створена таблиця practical_topics вручну з повною структурою
+2. Додані тестові дані (3 записи)
+3. Створена міграція для автоматичного відновлення таблиці
+4. Створений новий дамп з виправленою базою даних
+
+📊 СТРУКТУРА ТАБЛИЦІ practical_topics:
+=====================================
+- id (bigint, primary key)
+- category_id (foreign key -> practical_categories)
+- teacher_id (foreign key -> users, nullable)
+- title (varchar 255)
+- description (text, nullable)
+- teacher (varchar 255, nullable)
+- hours (int, nullable)
+- is_active (boolean, default true)
+- supervisor_name (varchar 255, nullable)
+- supervisor_position (varchar 255, nullable)
+- supervisor_email (varchar 255, nullable)
+- supervisor_phone (varchar 255, nullable)
+- supervisor_bio (text, nullable)
+- stages (json, nullable)
+- resources (json, nullable)
+- requirements (text, nullable)
+- consultations (json, nullable)
+- created_at, updated_at (timestamps)
+
+📝 ДОДАНІ ТЕСТОВІ ДАНІ:
+======================
+1. "Розробка веб-додатків на Laravel" (категорія: Курсові роботи)
+2. "Мобільна розробка на Flutter" (категорія: Курсові роботи)
+3. "Тестова тема практики" (категорія: test)
+
+📁 НОВІ ФАЙЛИ:
+==============
+✅ database_fixed_with_data.sql (179KB) - ВИПРАВЛЕНИЙ ДАМП
+✅ 2025_06_19_054319_recreate_practical_topics_table_if_missing.php - Міграція відновлення
+
+🚀 ВИКОРИСТАННЯ:
+===============
+Основний файл для відновлення: database_fixed_with_data.sql
+
+Автоматично:
+./restore_database.sh
+
+Вручну:
+mysql -u root -p -e "CREATE DATABASE site_dp_back CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+mysql -u root -p site_dp_back < database_fixed_with_data.sql
+
+🔒 ЗАХИСТ ВІД ПОВТОРЕННЯ:
+========================
+Створена міграція recreate_practical_topics_table_if_missing.php
+яка автоматично відновить таблицю, якщо вона буде відсутня.
+
+✅ СТАТУС: ПРОБЛЕМУ ВИРІШЕНО

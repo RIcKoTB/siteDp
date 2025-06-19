@@ -54,6 +54,7 @@ class GoogleController extends Controller
                     'email' => $googleUser->getEmail(),
                     'avatar' => $googleUser->getAvatar(),
                     'role' => 'student',
+                    'password' => null, // Для Google OAuth користувачів пароль не потрібен
                     'email_verified_at' => now(),
                 ]);
             }
