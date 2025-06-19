@@ -289,7 +289,7 @@
         </div>
 
 
-            <a href="/public/view/graduates.html">Випускники</a>
+            <a href="/graduates">Випускники</a>
         </nav>
 
     </div>

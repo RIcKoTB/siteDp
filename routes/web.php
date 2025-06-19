@@ -77,6 +77,8 @@ Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle'])->name(
 Route::get('/callback', [GoogleController::class, 'handleGoogleCallback'])->name('google.callback');
 Route::post('/logout', [GoogleController::class, 'logout'])->name('logout');
 
+
+
 // Сторінка входу
 Route::get('/login', function () {
     return view('auth.login');
@@ -123,4 +125,9 @@ Route::get("/programs/{id}", [EducationalProgramController::class, "show"])->nam
 Route::get("/surveys", [SurveyController::class, "index"])->name("surveys.index");
 Route::get("/surveys/{id}", [SurveyController::class, "show"])->name("surveys.show");
 Route::post("/surveys/{id}/submit", [SurveyController::class, "submit"])->name("surveys.submit");
+
+
+// Роути для випускників
+Route::get('/graduates', [App\Http\Controllers\GraduateController::class, 'index'])->name('graduates.index');
+Route::get('/graduates/{id}', [App\Http\Controllers\GraduateController::class, 'show'])->name('graduates.show');
 

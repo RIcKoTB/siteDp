@@ -63,15 +63,15 @@ class Survey extends Model
         }
 
         $now = Carbon::now();
-        
+
         if ($this->start_date && $this->start_date > $now) {
             return false;
         }
-        
+
         if ($this->end_date && $this->end_date < $now) {
             return false;
         }
-        
+
         return true;
     }
 
@@ -82,15 +82,15 @@ class Survey extends Model
         }
 
         $now = Carbon::now();
-        
+
         if ($this->start_date && $this->start_date > $now) {
             return 'Заплановане';
         }
-        
+
         if ($this->end_date && $this->end_date < $now) {
             return 'Завершене';
         }
-        
+
         return 'Активне';
     }
 
@@ -98,5 +98,43 @@ class Survey extends Model
     public function responses()
     {
         return $this->hasMany(SurveyResponse::class);
+    }
+
+
+
+
+
+    // Helper methods
+    public function hasUserCompleted($userId = null): bool
+    {
+        $userId = $userId ?? auth()->id();
+
+        if (!$userId) {
+            return false;
+        }
+
+        return $this->responses()
+            ->where('user_id', $userId)
+            ->exists();
+    }
+
+    public function getUserResponse($userId = null)
+    {
+        $userId = $userId ?? auth()->id();
+
+        if (!$userId) {
+            return null;
+        }
+
+        return $this->responses()
+            ->where('user_id', $userId)
+            ->first();
+    }
+
+
+
+    public function getResponsesCountAttribute(): int
+    {
+        return $this->responses()->count();
     }
 }
