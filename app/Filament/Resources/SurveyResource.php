@@ -14,19 +14,15 @@ class SurveyResource extends Resource
 {
     protected static ?string $model = Survey::class;
 
-    protected static ?string $navigationIcon = "heroicon-o-clipboard-document-check";
-
-    protected static ?string $navigationLabel = "Опитування";
+    protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-list';
     
-    protected static ?string $navigationGroup = "Опитування";
-    
-    protected static ?int $navigationSort = 1;
-    
+    protected static ?string $navigationLabel = 'Опитування';
     
     protected static ?string $modelLabel = 'опитування';
     
     protected static ?string $pluralModelLabel = 'опитування';
     
+    protected static ?string $navigationGroup = 'ОПП та Опитування';
 
     public static function form(Form $form): Form
     {

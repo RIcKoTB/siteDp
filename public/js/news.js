@@ -1,13 +1,11 @@
 // Enhanced interactions and animations for News Page
 document.addEventListener('DOMContentLoaded', function() {
     // Filter functionality
-    // Filter functionality
     const filterTabs = document.querySelectorAll('.filter-tab');
+    const newsCards = document.querySelectorAll('.news-card');
     
     filterTabs.forEach(tab => {
-        tab.addEventListener('click', function(e) {
-            e.preventDefault();
-            
+        tab.addEventListener('click', function() {
             // Remove active class from all tabs
             filterTabs.forEach(t => t.classList.remove('active'));
             // Add active class to clicked tab
@@ -15,26 +13,15 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const filter = this.dataset.filter;
             
-            // Create new URL with filter
-            const url = new URL(window.location.origin + window.location.pathname);
-            if (filter !== 'all') {
-                url.searchParams.set('category', filter);
-            }
-            // Reset pagination when filtering
-            url.searchParams.delete('page');
-            
-            // Navigate to filtered page
-            // Додаємо індикатор завантаження
-            document.querySelector('.news-grid').classList.add('loading');
-            
-            // Показуємо що фільтр активний
-            this.style.opacity = '0.8';
-            
-            window.location.href = url.toString();
-        });
-    });
-        });
-    });
+            // Filter news cards with animation
+            newsCards.forEach((card, index) => {
+                card.style.animation = 'none';
+                card.style.opacity = '0';
+                
+                setTimeout(() => {
+                    card.style.display = 'block';
+                    card.style.animation = `cardSlideIn 0.6s ease forwards ${index * 0.1}s`;
+                }, 100);
             });
         });
     });
@@ -193,29 +180,5 @@ document.addEventListener('DOMContentLoaded', function() {
     const heroStats = document.querySelector('.hero-stats');
     if (heroStats) {
         heroObserver.observe(heroStats);
-    }
-});
-
-// Додаткова логіка для фільтрації
-document.addEventListener('DOMContentLoaded', function() {
-    // Встановлюємо активну вкладку на основі URL параметрів
-    const urlParams = new URLSearchParams(window.location.search);
-    const currentCategory = urlParams.get('category') || 'all';
-    
-    // Знаходимо і активуємо правильну вкладку
-    const filterTabs = document.querySelectorAll('.filter-tab');
-    filterTabs.forEach(tab => {
-        tab.classList.remove('active');
-        if (tab.dataset.filter === currentCategory) {
-            tab.classList.add('active');
-        }
-    });
-    
-    // Якщо немає активної вкладки, активуємо "Всі новини"
-    if (!document.querySelector('.filter-tab.active')) {
-        const allTab = document.querySelector('.filter-tab[data-filter="all"]');
-        if (allTab) {
-            allTab.classList.add('active');
-        }
     }
 });

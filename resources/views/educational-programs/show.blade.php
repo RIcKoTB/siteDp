@@ -5,7 +5,7 @@
 @section('content')
 
 <!-- Hero Section -->
-<section class="program-hero" style="background-image: url('/storage/images/1.jpg')">
+<section class="program-hero">
     <div class="hero-overlay">
         <div class="container">
             <div class="hero-content">
@@ -434,19 +434,19 @@
         grid-template-columns: 1fr;
         gap: 2rem;
     }
-
+    
     .program-hero h1 {
         font-size: 2rem;
     }
-
+    
     .info-grid {
         grid-template-columns: 1fr;
     }
-
+    
     .action-buttons {
         flex-direction: column;
     }
-
+    
     .curriculum-table {
         overflow-x: auto;
     }

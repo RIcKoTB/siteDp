@@ -18,7 +18,6 @@ class EducationalComponent extends Model
         'learning_outcomes',
         'assessment_methods',
         'literature',
-        'methodical_materials',
         'category',
         'credits',
         'hours_total',
@@ -39,8 +38,6 @@ class EducationalComponent extends Model
         'learning_outcomes' => 'array',
         'assessment_methods' => 'array',
         'literature' => 'array',
-        'methodical_materials' => 'array',
-        'methodical_materials',
         'schedule' => 'array',
         'is_active' => 'boolean'
     ];
@@ -99,16 +96,7 @@ class EducationalComponent extends Model
     // Accessor для URL зображення
     public function getImageAttribute()
     {
-        if ($this->image_url) {
-            // Якщо зображення завантажене через Filament (зберігається в storage)
-            if (!str_starts_with($this->image_url, 'http')) {
-                return asset('storage/' . $this->image_url);
-            }
-            // Якщо це повний URL
-            return $this->image_url;
-        }
-        // Дефолтне зображення
-        return asset('images/default-subject.svg');
+        return $this->image_url ?: asset('images/default-subject.jpg');
     }
 
     // Метод для отримання короткого опису

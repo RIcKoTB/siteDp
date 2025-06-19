@@ -39,81 +39,49 @@ class NewsController extends Controller
         // 🔥 Інкремент переглядів
         $news->increment('views');
 
-        // Тільки кореневі коментарі (без parent_id) з користувачами
+        // Тільки кореневі коментарі (без parent_id)
         $comments = $news->comments()
-            ->with(['replies.user', 'user'])
+            ->with('replies')
             ->whereNull('parent_id')
             ->paginate(9);
         
-        return view("news.show", compact("news", "comments"));
+        return view('news.show', compact('news', 'comments'));
     }
 
     public function comment(Request $request, $id)
     {
-        // Перевіряємо, чи користувач авторизований
-        if (!auth()->check()) {
-            return redirect()->route('login')->with('error', 'Для додавання коментарів потрібно увійти в систему');
-        }
-
-        // Додаткове логування для діагностики
-        \Log::info('Comment request data:', [
-            'all' => $request->all(),
-            'content' => $request->input('content'),
-            'content_length' => strlen($request->input('content', '')),
-            'user_id' => auth()->id(),
-            'news_id' => $id
-        ]);
-
         $request->validate([
-            'content' => 'required|string|min:1|max:1000',
+            'author_name' => 'required',
+            'content' => 'required',
         ]);
-
-        // Перевіряємо, що content не порожній після валідації
-        $content = trim($request->input('content'));
-        if (empty($content)) {
-            return redirect()->back()->with('error', 'Коментар не може бути порожнім');
-        }
 
         Comment::create([
             'news_id' => $id,
-            'user_id' => auth()->id(),
-            'content' => $content,
+            'author_name' => $request->author_name,
+            'content' => $request->content,
         ]);
 
-        return redirect()->route('news.show', $id)->with('success', 'Коментар додано успішно!');
+        return redirect()->route('news.show', $id);
     }
 
     public function reply(Request $request, $id)
     {
-        // Перевіряємо, чи користувач авторизований
-        if (!auth()->check()) {
-            return redirect()->route('login')->with('error', 'Для додавання відповідей потрібно увійти в систему');
-        }
-
-        // Додаткове логування для діагностики
-        \Log::info('Reply request data:', $request->all());
-
         $request->validate([
-            'content' => 'required|string|min:1|max:1000',
+            'author_name' => 'required',
+            'content' => 'required',
             'parent_id' => 'required|exists:comments,id',
         ]);
-
-        // Перевіряємо, що content не порожній після валідації
-        $content = trim($request->input('content'));
-        if (empty($content)) {
-            return redirect()->back()->with('error', 'Відповідь не може бути порожньою');
-        }
 
         $parent = Comment::findOrFail($request->parent_id);
 
         Comment::create([
             'news_id' => $id,
-            'user_id' => auth()->id(),
-            'content' => $content,
+            'author_name' => $request->author_name,
+            'content' => $request->content,
             'parent_id' => $request->parent_id,
         ]);
 
-        return redirect()->route('news.show', $parent->news_id)->with('success', 'Відповідь додано успішно!');
+        return redirect()->route('news.show', $parent->news_id);
     }
 
     public function like(Request $request, $id)

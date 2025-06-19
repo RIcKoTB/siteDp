@@ -9,7 +9,7 @@
 @section('content')
 
 <!-- Hero Section -->
-<section class="hero category-hero" style="background-image: url('/storage/images/1.jpg')" >
+<section class="hero category-hero" style="background: linear-gradient(135deg, {{ $category->color }}dd 0%, {{ $category->color }}aa 100%);">
     <div class="hero-overlay">
         <div class="container">
             <div class="breadcrumb">
@@ -17,18 +17,18 @@
                 <span>/</span>
                 <span>{{ $category->name }}</span>
             </div>
-
+            
             <h1>
                 @if($category->icon)
                     <span class="category-icon">{{ $category->icon }}</span>
                 @endif
                 {{ $category->name }}
             </h1>
-
+            
             @if($category->description)
                 <p>{{ $category->description }}</p>
             @endif
-
+            
             <div class="category-stats">
                 <div class="stat-item">
                     <span class="stat-value">{{ $components->total() }}</span>
@@ -46,9 +46,9 @@
             <a href="{{ route('education.index') }}" class="tab-btn">
                 Всі категорії
             </a>
-
+            
             @foreach($categories as $cat)
-                <a href="{{ route('education.category', $cat->slug) }}"
+                <a href="{{ route('education.category', $cat->slug) }}" 
                    class="tab-btn {{ $cat->slug === $category->slug ? 'active' : '' }}"
                    style="--category-color: {{ $cat->color }}">
                     @if($cat->icon)
@@ -82,23 +82,23 @@
                                 </div>
                             </div>
                         </div>
-
+                        
                         <div class="card-body">
                             <div class="component-meta">
                                 <span class="component-code">{{ $component->code }}</span>
                                 <span class="component-credits">{{ $component->credits }} кредитів</span>
                             </div>
-
+                            
                             <h3 class="component-title">
                                 <a href="{{ route('education.show', $component->id) }}">
                                     {{ $component->title }}
                                 </a>
                             </h3>
-
+                            
                             <p class="component-description">
                                 {{ $component->short_description }}
                             </p>
-
+                            
                             <div class="component-details">
                                 <div class="detail-item">
                                     <span class="icon">⏰</span>
@@ -116,7 +116,7 @@
                                 @endif
                             </div>
                         </div>
-
+                        
                         <div class="card-footer">
                             <a href="{{ route('education.show', $component->id) }}" class="btn btn-primary">
                                 Детальніше
@@ -291,17 +291,17 @@
         flex-direction: column;
         gap: 0.5rem;
     }
-
+    
     .category-icon {
         font-size: 2rem;
     }
-
+    
     .category-tabs {
         justify-content: flex-start;
         overflow-x: auto;
         padding-bottom: 0.5rem;
     }
-
+    
     .tab-btn {
         white-space: nowrap;
     }

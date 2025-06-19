@@ -35,7 +35,6 @@ class EducationalCategory extends Model
         return $query->where('is_active', true);
     }
 
-
     // Scope для сортування
     public function scopeOrdered($query)
     {

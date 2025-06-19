@@ -13,8 +13,6 @@ class Service extends Model
     ];
 
     protected $casts = [
-        'price'      => 'decimal:2',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
+        'price' => 'decimal:2',
     ];
 }

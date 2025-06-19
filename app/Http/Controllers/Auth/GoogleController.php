@@ -61,7 +61,7 @@ class GoogleController extends Controller
             // Авторизуємо користувача
             Auth::login($user);
 
-            return redirect()->intended('/')
+            return redirect()->intended('/practical')
                 ->with('success', 'Ви успішно увійшли в систему!');
 
         } catch (\Exception $e) {
@@ -79,7 +79,7 @@ class GoogleController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/')
+        return redirect('/practical')
             ->with('success', 'Ви успішно вийшли з системи!');
     }
 }

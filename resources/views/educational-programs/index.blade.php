@@ -5,7 +5,7 @@
 @section('content')
 
 <!-- Hero Section -->
-<section class="hero" style="background-image: url('/storage/images/1.jpg')">
+<section class="hero">
     <div class="hero-overlay">
         <div class="container">
             <h1>🎓 Освітньо-професійні програми</h1>
@@ -27,39 +27,33 @@
                 @foreach($programs as $program)
                     <div class="program-card">
                         <div class="card-header">
-                            @if($program->image_url)
+                            @if($program->image)
                                 <div class="program-image">
-                                    <img src="{{ $program->image }}" alt="{{ $program->title }}" 
-                                         onerror="this.style.display='none'; this.parentElement.style.display='none';">
-                                </div>
-                            @else
-                                <div class="program-placeholder">
-                                    <div class="placeholder-icon">🎓</div>
-                                    <div class="placeholder-text">{{ $program->title }}</div>
+                                    <img src="{{ $program->image }}" alt="{{ $program->title }}">
                                 </div>
                             @endif
                             <div class="program-badge">
                                 {{ $program->code }}
                             </div>
                         </div>
-
+                        
                         <div class="card-body">
                             <h3 class="program-title">
                                 <a href="{{ route('programs.show', $program->id) }}">
                                     {{ $program->title }}
                                 </a>
                             </h3>
-
+                            
                             @if($program->qualification)
                                 <div class="qualification">
                                     🎯 {{ $program->qualification }}
                                 </div>
                             @endif
-
+                            
                             <p class="program-description">
                                 {{ Str::limit($program->description, 150) }}
                             </p>
-
+                            
                             <div class="program-details">
                                 <div class="detail-item">
                                     <span class="icon">⏰</span>
@@ -71,7 +65,7 @@
                                 </div>
                             </div>
                         </div>
-
+                        
                         <div class="card-footer">
                             <a href="{{ route('programs.show', $program->id) }}" class="btn btn-primary">
                                 Детальніше про програму
@@ -161,65 +155,16 @@
 .card-header {
     position: relative;
     height: 200px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
-    color: white;
-}
-
-.program-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
 }
 
 .program-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center;
-}
-
-.program-placeholder {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 2rem;
-    color: white;
-    width: 100%;
-    height: 100%;
-}
-
-.placeholder-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    opacity: 0.8;
-}
-
-.placeholder-text {
-    font-size: 1rem;
-    font-weight: 500;
-    opacity: 0.9;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-}
-
-.placeholder-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    opacity: 0.5;
-}
-
-.placeholder-text {
-    font-size: 1rem;
-    font-weight: 500;
-    opacity: 0.7;
 }
 
 .program-badge {
@@ -232,8 +177,6 @@
     border-radius: 20px;
     font-size: 0.8rem;
     font-weight: 600;
-    z-index: 2;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .card-body {
@@ -345,12 +288,12 @@
     .hero h1 {
         font-size: 2rem;
     }
-
+    
     .programs-grid {
         grid-template-columns: 1fr;
         gap: 1.5rem;
     }
-
+    
     .program-details {
         flex-direction: column;
         gap: 0.5rem;

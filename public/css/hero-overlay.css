@@ -1,0 +1,157 @@
+/* Universal Hero Overlay Styles */
+
+/* Base hero styles with overlay support */
+.hero,
+.survey-hero,
+.graduates-hero,
+.graduate-hero,
+.program-hero,
+.component-hero,
+.category-hero,
+.educational-hero {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Dark overlay for better text readability */
+.hero::before,
+.survey-hero::before,
+.graduates-hero::before,
+.graduate-hero::before,
+.program-hero::before,
+.component-hero::before,
+.category-hero::before,
+.educational-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1;
+}
+
+/* Ensure content is above overlay */
+.hero .container,
+.survey-hero .container,
+.graduates-hero .container,
+.graduate-hero .container,
+.program-hero .container,
+.component-hero .container,
+.category-hero .container,
+.educational-hero .container {
+    position: relative;
+    z-index: 2;
+}
+
+/* Different overlay intensities for different sections */
+.hero.light-overlay::before {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.hero.medium-overlay::before {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.hero.dark-overlay::before {
+    background: rgba(0, 0, 0, 0.7);
+}
+
+/* Gradient overlays */
+.hero.gradient-overlay::before {
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.3) 0%,
+        rgba(0, 0, 0, 0.7) 100%
+    );
+}
+
+/* Colored overlays */
+.hero.blue-overlay::before {
+    background: rgba(52, 144, 220, 0.6);
+}
+
+.hero.green-overlay::before {
+    background: rgba(40, 167, 69, 0.6);
+}
+
+.hero.purple-overlay::before {
+    background: rgba(102, 126, 234, 0.6);
+}
+
+/* News hero specific styles */
+.news-hero::before {
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.4) 0%,
+        rgba(0, 0, 0, 0.8) 100%
+    );
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .hero::before,
+    .survey-hero::before,
+    .graduates-hero::before,
+    .graduate-hero::before,
+    .program-hero::before,
+    .component-hero::before,
+    .category-hero::before,
+    .educational-hero::before {
+        background: rgba(0, 0, 0, 0.7);
+    }
+}
+
+/* Animation for overlay */
+.hero::before,
+.survey-hero::before,
+.graduates-hero::before,
+.graduate-hero::before,
+.program-hero::before,
+.component-hero::before,
+.category-hero::before,
+.educational-hero::before {
+    transition: background 0.3s ease;
+}
+
+/* Hover effects for interactive heroes */
+.hero:hover::before {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+/* Text shadow for better readability */
+.hero h1,
+.hero h2,
+.hero p,
+.survey-hero h1,
+.survey-hero h2,
+.survey-hero p,
+.graduates-hero h1,
+.graduates-hero h2,
+.graduates-hero p,
+.graduate-hero h1,
+.graduate-hero h2,
+.graduate-hero p {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Special overlay for home page */
+.home-hero::before {
+    background: linear-gradient(
+        135deg,
+        rgba(52, 144, 220, 0.4) 0%,
+        rgba(40, 167, 69, 0.4) 100%
+    );
+}
+
+/* Special overlay for about page */
+.about-hero::before {
+    background: linear-gradient(
+        to right,
+        rgba(102, 126, 234, 0.5) 0%,
+        rgba(118, 75, 162, 0.5) 100%
+    );
+}

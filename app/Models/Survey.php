@@ -12,21 +12,21 @@ class Survey extends Model
         'title',
         'description',
         'questions',
-        'is_active',
+        'target_audience',
         'is_anonymous',
         'start_date',
         'end_date',
-        'target_audience',
         'thank_you_message',
+        'is_active',
         'sort_order',
     ];
 
     protected $casts = [
         'questions' => 'array',
-        'is_active' => 'boolean',
-        'is_anonymous' => 'boolean',
         'start_date' => 'datetime',
         'end_date' => 'datetime',
+        'is_anonymous' => 'boolean',
+        'is_active' => 'boolean',
         'sort_order' => 'integer',
     ];
 
@@ -38,15 +38,14 @@ class Survey extends Model
 
     public function scopeAvailable(Builder $query): Builder
     {
-        $now = Carbon::now();
-        return $query->where('is_active', true)
-            ->where(function ($q) use ($now) {
+        return $query->active()
+            ->where(function ($q) {
                 $q->whereNull('start_date')
-                  ->orWhere('start_date', '<=', $now);
+                  ->orWhere('start_date', '<=', now());
             })
-            ->where(function ($q) use ($now) {
+            ->where(function ($q) {
                 $q->whereNull('end_date')
-                  ->orWhere('end_date', '>=', $now);
+                  ->orWhere('end_date', '>=', now());
             });
     }
 
@@ -80,18 +79,23 @@ class Survey extends Model
         if (!$this->is_active) {
             return 'Неактивне';
         }
-
+        
         $now = Carbon::now();
-
+        
         if ($this->start_date && $this->start_date > $now) {
             return 'Заплановане';
         }
-
+        
         if ($this->end_date && $this->end_date < $now) {
             return 'Завершене';
         }
-
+        
         return 'Активне';
+    }
+
+    public function getImageAttribute(): ?string
+    {
+        return $this->image_url ? asset('storage/' . $this->image_url) : null;
     }
 
     // Relationships
@@ -100,41 +104,27 @@ class Survey extends Model
         return $this->hasMany(SurveyResponse::class);
     }
 
-
-
-
-
-    // Helper methods
-    public function hasUserCompleted($userId = null): bool
+    // Перевірка, чи користувач вже проходив це опитування
+    public function hasUserCompleted($userId = null)
     {
         $userId = $userId ?? auth()->id();
-
+        
         if (!$userId) {
             return false;
         }
-
-        return $this->responses()
-            ->where('user_id', $userId)
-            ->exists();
+        
+        return $this->responses()->where('user_id', $userId)->exists();
     }
 
+    // Отримати відповідь користувача
     public function getUserResponse($userId = null)
     {
         $userId = $userId ?? auth()->id();
-
+        
         if (!$userId) {
             return null;
         }
-
-        return $this->responses()
-            ->where('user_id', $userId)
-            ->first();
-    }
-
-
-
-    public function getResponsesCountAttribute(): int
-    {
-        return $this->responses()->count();
+        
+        return $this->responses()->where('user_id', $userId)->first();
     }
 }

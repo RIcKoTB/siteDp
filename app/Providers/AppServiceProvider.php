@@ -25,7 +25,6 @@ class AppServiceProvider extends ServiceProvider
         // Автоматична передача категорій у всі шаблони
         View::composer('*', function ($view) {
             $view->with('practicalCategories', PracticalCategory::orderBy('title')->get());
-            
             $view->with('educationalCategories', EducationalCategory::active()->ordered()->get());
         });
     }

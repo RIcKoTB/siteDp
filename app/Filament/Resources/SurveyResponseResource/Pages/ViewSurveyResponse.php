@@ -13,24 +13,13 @@ class ViewSurveyResponse extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make()
-                ->label('Видалити відповідь')
-                ->requiresConfirmation()
-                ->modalHeading('Видалити відповідь на опитування?')
-                ->modalDescription('Ця дія незворотна. Відповідь користувача буде видалена назавжди.')
-                ->modalSubmitActionLabel('Так, видалити'),
-                
             Actions\Action::make('back')
                 ->label('Назад до списку')
                 ->icon('heroicon-o-arrow-left')
-                ->color('gray')
-                ->url(fn () => SurveyResponseResource::getUrl('index')),
+                ->url($this->getResource()::getUrl('index')),
+            
+            Actions\DeleteAction::make()
+                ->label('Видалити відповідь'),
         ];
-    }
-    
-    public function getTitle(): string
-    {
-        $record = $this->getRecord();
-        return "Відповідь користувача {$record->user->name} на опитування \"{$record->survey->title}\"";
     }
 }

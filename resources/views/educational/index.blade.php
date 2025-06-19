@@ -9,7 +9,7 @@
 @section('content')
 
 <!-- Hero Section -->
-<section class="hero educational-hero" style="background-image: url('/storage/images/1.jpg')">
+<section class="hero educational-hero">
     <div class="hero-overlay">
         <div class="container">
             <h1>📚 Освітні компоненти</h1>
@@ -25,9 +25,9 @@
             <!-- Search -->
             <div class="search-box">
                 <form method="GET" action="{{ route('education.index') }}">
-                    <input type="text"
-                           name="search"
-                           value="{{ request('search') }}"
+                    <input type="text" 
+                           name="search" 
+                           value="{{ request('search') }}" 
                            placeholder="Пошук предметів..."
                            class="search-input">
                     <input type="hidden" name="category" value="{{ request('category', 'all') }}">
@@ -37,14 +37,14 @@
 
             <!-- Category Filters -->
             <div class="category-filters">
-                <a href="{{ route('education.index', ['category' => 'all', 'search' => request('search')]) }}"
+                <a href="{{ route('education.index', ['category' => 'all', 'search' => request('search')]) }}" 
                    class="filter-btn {{ request('category', 'all') === 'all' ? 'active' : '' }}">
                     Всі предмети
                     <span class="count">{{ $categoryCounts['all'] }}</span>
                 </a>
-
+                
                 @foreach($categories as $category)
-                    <a href="{{ route('education.index', ['category' => $category->slug, 'search' => request('search')]) }}"
+                    <a href="{{ route('education.index', ['category' => $category->slug, 'search' => request('search')]) }}" 
                        class="filter-btn {{ request('category') === $category->slug ? 'active' : '' }}"
                        style="--category-color: {{ $category->color }}">
                         @if($category->icon)
@@ -74,23 +74,23 @@
                                 </div>
                             </div>
                         </div>
-
+                        
                         <div class="card-body">
                             <div class="component-meta">
                                 <span class="component-code">{{ $component->code }}</span>
                                 <span class="component-credits">{{ $component->credits }} кредитів</span>
                             </div>
-
+                            
                             <h3 class="component-title">
                                 <a href="{{ route('education.show', $component->id) }}">
                                     {{ $component->title }}
                                 </a>
                             </h3>
-
+                            
                             <p class="component-description">
                                 {{ $component->short_description }}
                             </p>
-
+                            
                             <div class="component-details">
                                 <div class="detail-item">
                                     <span class="icon">⏰</span>
@@ -108,7 +108,7 @@
                                 @endif
                             </div>
                         </div>
-
+                        
                         <div class="card-footer">
                             <a href="{{ route('education.show', $component->id) }}" class="btn btn-primary">
                                 Детальніше

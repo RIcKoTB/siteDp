@@ -10,7 +10,7 @@
 @section('content')
 
 <!-- Hero Section -->
-<section class="hero component-hero" style="background-image: url('/storage/images/1.jpg')">
+<section class="hero component-hero">
     <div class="hero-overlay">
         <div class="container">
             <div class="hero-content">
@@ -21,7 +21,7 @@
                     <span>/</span>
                     <span>{{ $component->title }}</span>
                 </div>
-
+                
                 <div class="component-header">
                     <div class="component-meta">
                         <span class="component-code">{{ $component->code }}</span>
@@ -29,9 +29,9 @@
                             {{ $component->category_name }}
                         </span>
                     </div>
-
+                    
                     <h1>{{ $component->title }}</h1>
-
+                    
                     <div class="component-stats">
                         <div class="stat-item">
                             <span class="stat-value">{{ $component->credits }}</span>
@@ -135,51 +135,6 @@
                     </div>
                 @endif
 
-
-        <!-- Methodical Materials -->
-        @if($component->methodical_materials && count($component->methodical_materials) > 0)
-            <div class="content-block">
-                <h2>📚 Методичні матеріали</h2>
-                <div class="methodical-list">
-                    @foreach($component->methodical_materials as $material)
-                        <div class="methodical-item">
-                            <div class="methodical-header">
-                                <h4>{{ $material['title'] ?? 'Без назви' }}</h4>
-                                @if(isset($material['type']))
-                                    <span class="material-type">{{ $material['type'] }}</span>
-                                @endif
-                            </div>
-                            
-                            @if(isset($material['description']))
-                                <p class="material-description">{{ $material['description'] }}</p>
-                            @endif
-                            
-                            <div class="material-meta">
-                                @if(isset($material['author']))
-                                    <span class="material-author">👨‍🏫 {{ $material['author'] }}</span>
-                                @endif
-                                @if(isset($material['year']))
-                                    <span class="material-year">📅 {{ $material['year'] }}</span>
-                                @endif
-                            </div>
-                            
-                            @if(isset($material['url']) && $material['url'])
-                                <div class="material-actions">
-                                    <a href="{{ $material['url'] }}" 
-                                       target="_blank" 
-                                       rel="noopener noreferrer" 
-                                       class="material-link">
-                                        <span class="link-icon">🔗</span>
-                                        Переглянути матеріал
-                                        <span class="external-icon">↗</span>
-                                    </a>
-                                </div>
-                            @endif
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        @endif
                 <!-- Schedule -->
                 @if($component->schedule && count($component->schedule) > 0)
                     <div class="content-block">

@@ -4,43 +4,51 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ServiceResource\Pages;
 use App\Models\Service;
-use Filament\Resources\Resource;
+use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Resources\Resource;
+use Filament\Tables;
 use Filament\Tables\Table;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteBulkAction;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class ServiceResource extends Resource
 {
     protected static ?string $model = Service::class;
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    protected static ?string $navigationIcon = 'heroicon-o-cog-6-tooth';
+
+    protected static ?string $navigationLabel = 'Послуги';
+
+    protected static ?string $modelLabel = 'Послуга';
+
+    protected static ?string $pluralModelLabel = 'Послуги';
+
+    protected static ?string $navigationGroup = 'Контент';
+
+    protected static ?int $navigationSort = 5;
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                TextInput::make('name')
-                    ->label('Назва')
-                    ->required()
-                    ->maxLength(255)
-                    ->unique(ignoreRecord: true),
-
-                Textarea::make('description')
-                    ->label('Опис')
-                    ->rows(4)
-                    ->required(),
-
-                TextInput::make('price')
-                    ->label('Ціна, ₴')
-                    ->numeric()
-                    ->required()
-                    ->minValue(0)
-                    ->step(0.01),
+                Forms\Components\Section::make('Інформація про послугу')
+                    ->schema([
+                        Forms\Components\TextInput::make('name')
+                            ->label('Назва послуги')
+                            ->required()
+                            ->maxLength(255),
+                        
+                        Forms\Components\Textarea::make('description')
+                            ->label('Опис послуги')
+                            ->rows(4)
+                            ->columnSpanFull(),
+                        
+                        Forms\Components\TextInput::make('price')
+                            ->label('Ціна')
+                            ->numeric()
+                            ->prefix('₴')
+                            ->step(0.01),
+                    ]),
             ]);
     }
 
@@ -48,38 +56,62 @@ class ServiceResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('id')
-                    ->label('ID')
-                    ->sortable(),
-                TextColumn::make('name')
+                Tables\Columns\TextColumn::make('name')
                     ->label('Назва')
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('price')
+                
+                Tables\Columns\TextColumn::make('description')
+                    ->label('Опис')
+                    ->limit(50)
+                    ->searchable(),
+                
+                Tables\Columns\TextColumn::make('price')
                     ->label('Ціна')
-                    ->formatStateUsing(fn ($state) => number_format($state, 2, '.', ' ') . ' ₴')
+                    ->money('UAH')
                     ->sortable(),
-                TextColumn::make('created_at')
+                
+                Tables\Columns\TextColumn::make('created_at')
                     ->label('Створено')
                     ->dateTime('d.m.Y H:i')
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->label('Оновлено')
+                    ->dateTime('d.m.Y H:i')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+            ])
+            ->filters([
+                //
             ])
             ->actions([
-                EditAction::make(),
+                Tables\Actions\ViewAction::make(),
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->defaultSort('name');
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            //
+        ];
     }
 
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListServices::route('/'),
+            'index' => Pages\ListServices::route('/'),
             'create' => Pages\CreateService::route('/create'),
-            'edit'   => Pages\EditService::route('/{record}/edit'),
+            'edit' => Pages\EditService::route('/{record}/edit'),
         ];
     }
 }

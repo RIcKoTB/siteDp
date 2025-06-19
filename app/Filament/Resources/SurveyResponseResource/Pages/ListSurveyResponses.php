@@ -7,7 +7,6 @@ use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Resources\Components\Tab;
 use Illuminate\Database\Eloquent\Builder;
-use App\Models\Survey;
 
 class ListSurveyResponses extends ListRecords
 {
@@ -22,27 +21,28 @@ class ListSurveyResponses extends ListRecords
                 ->color('success')
                 ->action(function () {
                     // Тут можна додати логіку експорту
-                    $this->notify('success', 'Експорт буде доданий пізніше');
+                    $this->notify('success', 'Експорт буде реалізований пізніше');
                 }),
         ];
     }
-    
+
     public function getTabs(): array
     {
-        $tabs = [
-            'all' => Tab::make('Всі результати')
-                ->badge($this->getModel()::count()),
+        return [
+            'all' => Tab::make('Всі відповіді')
+                ->badge(fn () => \App\Models\SurveyResponse::count()),
+            
+            'today' => Tab::make('Сьогодні')
+                ->modifyQueryUsing(fn (Builder $query) => $query->whereDate('created_at', today()))
+                ->badge(fn () => \App\Models\SurveyResponse::whereDate('created_at', today())->count()),
+            
+            'this_week' => Tab::make('Цього тижня')
+                ->modifyQueryUsing(fn (Builder $query) => $query->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()]))
+                ->badge(fn () => \App\Models\SurveyResponse::whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()])->count()),
+            
+            'this_month' => Tab::make('Цього місяця')
+                ->modifyQueryUsing(fn (Builder $query) => $query->whereMonth('created_at', now()->month))
+                ->badge(fn () => \App\Models\SurveyResponse::whereMonth('created_at', now()->month)->count()),
         ];
-        
-        // Додаємо вкладки для кожного опитування
-        $surveys = Survey::withCount('responses')->get();
-        
-        foreach ($surveys as $survey) {
-            $tabs["survey_{$survey->id}"] = Tab::make($survey->title)
-                ->badge($survey->responses_count)
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('survey_id', $survey->id));
-        }
-        
-        return $tabs;
     }
 }

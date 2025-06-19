@@ -47,21 +47,21 @@
             <!-- Filter Tabs -->
             <div class="filter-section">
                 <div class="filter-tabs">
-                    <button class="filter-tab {{ request('category', 'all') === 'all' ? 'active' : '' }}" data-filter="all">
+                    <button class="filter-tab active" data-filter="all">
                         <span class="tab-icon">📋</span>
-                        <span class="tab-text">Всі новини</span><span class="tab-count">({{ $categoryCounts['all'] ?? 0 }})</span>
+                        <span class="tab-text">Всі новини</span>
                     </button>
-                    <button class="filter-tab {{ request('category') === 'events' ? 'active' : '' }}" data-filter="events">
+                    <button class="filter-tab" data-filter="events">
                         <span class="tab-icon">🎉</span>
-                        <span class="tab-text">Події</span><span class="tab-count">({{ $categoryCounts['events'] ?? 0 }})</span>
+                        <span class="tab-text">Події</span>
                     </button>
-                    <button class="filter-tab {{ request('category') === 'achievements' ? 'active' : '' }}" data-filter="achievements">
+                    <button class="filter-tab" data-filter="achievements">
                         <span class="tab-icon">🏆</span>
-                        <span class="tab-text">Досягнення</span><span class="tab-count">({{ $categoryCounts['achievements'] ?? 0 }})</span>
+                        <span class="tab-text">Досягнення</span>
                     </button>
-                    <button class="filter-tab {{ request('category') === 'announcements' ? 'active' : '' }}" data-filter="announcements">
+                    <button class="filter-tab" data-filter="announcements">
                         <span class="tab-icon">📢</span>
-                        <span class="tab-text">Оголошення</span><span class="tab-count">({{ $categoryCounts['announcements'] ?? 0 }})</span>
+                        <span class="tab-text">Оголошення</span>
                     </button>
                 </div>
             </div>
@@ -77,7 +77,7 @@
                                 <div class="image-overlay">
                                     <div class="overlay-content">
                                         <div class="card-badges">
-                                            <span class="badge badge-category">{{ $item->category === "events" ? "🎉 Події" : ($item->category === "achievements" ? "🏆 Досягнення" : ($item->category === "announcements" ? "📢 Оголошення" : "📰 Новини")) }}</span>
+                                            <span class="badge badge-category">📰 Новини</span>
                                             <span class="badge badge-date">
                                                 <span class="date-day">{{ \Carbon\Carbon::parse($item->date)->format('d') }}</span>
                                                 <span class="date-month">{{ \Carbon\Carbon::parse($item->date)->translatedFormat('M') }}</span>
@@ -138,11 +138,11 @@
                                     <div class="engagement-stats">
                                         <button class="stat-btn like-btn">
                                             <i class="stat-icon">❤️</i>
-                                            <span class="stat-count">{{ $item->likes_count }}</span>
+                                            <span class="stat-count">{{ rand(5, 25) }}</span>
                                         </button>
                                         <button class="stat-btn comment-btn">
                                             <i class="stat-icon">💬</i>
-                                            <span class="stat-count">{{ $item->comments_count }}</span>
+                                            <span class="stat-count">{{ rand(0, 8) }}</span>
                                         </button>
                                     </div>
                                 </div>
@@ -204,6 +204,5 @@
 @endsection
 
 @push('scripts')
-<script src="{{ asset('js/news-filter.js') }}"></script>
 <script src="{{ asset('js/news.js') }}"></script>
 @endpush
