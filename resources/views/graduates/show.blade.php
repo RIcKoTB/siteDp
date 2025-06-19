@@ -5,7 +5,7 @@
 @section('content')
 
 <!-- Graduate Hero -->
-<section class="graduate-hero">
+<section class="graduate-hero" style="background-image: url('/storage/images/1.jpg')">
     <div class="container">
         <div class="hero-content">
             <div class="graduate-main-info">
@@ -21,12 +21,12 @@
                         <div class="featured-badge-large">⭐</div>
                     @endif
                 </div>
-                
+
                 <div class="graduate-details">
                     <h1>{{ $graduate->full_name }}</h1>
                     <p class="specialty">{{ $graduate->specialty }}</p>
                     <p class="graduation-info">{{ $graduate->graduation_status }}</p>
-                    
+
                     @if($graduate->current_position || $graduate->company)
                         <div class="current-position">
                             @if($graduate->current_position)
@@ -37,20 +37,20 @@
                             @endif
                         </div>
                     @endif
-                    
+
                     <div class="contact-links">
                         @if($graduate->contact_email)
                             <a href="mailto:{{ $graduate->contact_email }}" class="contact-btn">
                                 📧 Email
                             </a>
                         @endif
-                        
+
                         @if($graduate->linkedin_url)
                             <a href="{{ $graduate->linkedin_url }}" target="_blank" class="contact-btn linkedin">
                                 💼 LinkedIn
                             </a>
                         @endif
-                        
+
                         @if($graduate->contact_phone)
                             <a href="tel:{{ $graduate->contact_phone }}" class="contact-btn">
                                 📞 Телефон
@@ -76,7 +76,7 @@
                         </blockquote>
                     </div>
                 @endif
-                
+
                 @if($graduate->achievements)
                     <div class="achievements-section">
                         <h2>🏆 Досягнення</h2>
@@ -85,7 +85,7 @@
                         </div>
                     </div>
                 @endif
-                
+
                 <div class="experience-section">
                     <h2>📈 Професійний досвід</h2>
                     <div class="experience-info">
@@ -93,14 +93,14 @@
                             <span class="experience-label">Років досвіду:</span>
                             <span class="experience-value">{{ $graduate->experience_years }} {{ $graduate->experience_years == 1 ? 'рік' : ($graduate->experience_years < 5 ? 'роки' : 'років') }}</span>
                         </div>
-                        
+
                         @if($graduate->current_position)
                             <div class="experience-item">
                                 <span class="experience-label">Поточна посада:</span>
                                 <span class="experience-value">{{ $graduate->current_position }}</span>
                             </div>
                         @endif
-                        
+
                         @if($graduate->company)
                             <div class="experience-item">
                                 <span class="experience-label">Компанія:</span>
@@ -110,7 +110,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="sidebar">
                 <div class="graduate-stats">
                     <h3>📊 Інформація</h3>
@@ -133,7 +133,7 @@
                         </div>
                     @endif
                 </div>
-                
+
                 <div class="back-to-list">
                     <a href="{{ route('graduates.index') }}" class="btn btn-outline">
                         ← Повернутися до списку
@@ -164,16 +164,16 @@
                             <div class="featured-badge-small">⭐</div>
                         @endif
                     </div>
-                    
+
                     <div class="related-info">
                         <h4>{{ $related->full_name }}</h4>
                         <p class="related-specialty">{{ $related->specialty }}</p>
                         <p class="related-year">{{ $related->graduation_year }} рік</p>
-                        
+
                         @if($related->current_position)
                             <p class="related-position">{{ $related->current_position }}</p>
                         @endif
-                        
+
                         <a href="{{ route('graduates.show', $related->id) }}" class="btn btn-sm">
                             Детальніше
                         </a>
@@ -195,6 +195,26 @@
     color: white;
     padding: 4rem 0;
     margin-bottom: 3rem;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.graduate-hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.graduate-hero .container {
+    position: relative;
+    z-index: 2;
 }
 
 .hero-content {
@@ -255,15 +275,44 @@
 }
 
 .graduate-details h1 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+    position: relative;
+}
+
+.graduate-details h1::after {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, #ffc107 0%, #ff9800 100%);
+    border-radius: 2px;
 }
 
 .graduate-details .specialty {
-    font-size: 1.3rem;
-    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.4rem;
+    color: #ffc107;
+    font-weight: 600;
     margin-bottom: 0.5rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.graduation-info {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 2rem;
+    font-weight: 400;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .graduation-info {
@@ -273,7 +322,27 @@
 }
 
 .current-position {
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.current-position h3 {
+    font-size: 1.6rem;
+    margin-bottom: 0.5rem;
+    color: #ffc107;
+    font-weight: 700;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.current-position p {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .current-position h3 {
@@ -585,29 +654,51 @@
         text-align: center;
         gap: 2rem;
     }
-    
+
     .graduate-photo-large {
         width: 150px;
         height: 150px;
         margin: 0 auto;
     }
-    
-    .graduate-details h1 {
-        font-size: 2rem;
-    }
-    
+
+.graduate-details h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+    position: relative;
+}
+
+.graduate-details h1::after {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, #ffc107 0%, #ff9800 100%);
+    border-radius: 2px;
+}
+
     .content-grid {
         grid-template-columns: 1fr;
         gap: 2rem;
     }
-    
+
     .contact-links {
         justify-content: center;
     }
-    
+
     .related-grid {
         grid-template-columns: 1fr;
     }
 }
 </style>
 @endpush
+

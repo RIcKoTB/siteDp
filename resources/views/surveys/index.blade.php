@@ -5,12 +5,12 @@
 @section('content')
 
 <!-- Hero Section -->
-<section class="hero">
+<section class="hero" style="background-image: url('/storage/images/1.jpg')">
     <div class="container">
         <div class="hero-content">
             <h1>📋 Доступні опитування</h1>
             <p>Ваша думка важлива для нас! Візьміть участь в опитуваннях та допоможіть покращити якість освіти</p>
-            
+
             @auth
                 <div class="user-info">
                     <span class="user-greeting">👋 Вітаємо, {{ auth()->user()->name }}!</span>
@@ -35,21 +35,21 @@
                             <div class="survey-status {{ $survey->status == 'Активне' ? 'active' : 'inactive' }}">
                                 {{ $survey->status }}
                             </div>
-                            
+
                             @if(isset($survey->user_completed) && $survey->user_completed)
                                 <div class="completion-badge">
                                     ✅ Пройдено
                                 </div>
                             @endif
                         </div>
-                        
+
                         <div class="survey-content">
                             <h3 class="survey-title">{{ $survey->title }}</h3>
-                            
+
                             @if($survey->description)
                                 <p class="survey-description">{{ Str::limit($survey->description, 120) }}</p>
                             @endif
-                            
+
                             <div class="survey-meta">
                                 @if($survey->target_audience)
                                     <div class="meta-item">
@@ -57,33 +57,33 @@
                                         <span>{{ $survey->target_audience }}</span>
                                     </div>
                                 @endif
-                                
+
                                 <div class="meta-item">
                                     <span class="icon">❓</span>
                                     <span>{{ count($survey->questions) }} {{ count($survey->questions) == 1 ? 'питання' : (count($survey->questions) < 5 ? 'питання' : 'питань') }}</span>
                                 </div>
-                                
+
                                 @if($survey->is_anonymous)
                                     <div class="meta-item">
                                         <span class="icon">🔒</span>
                                         <span>Анонімне</span>
                                     </div>
                                 @endif
-                                
+
                                 @if($survey->end_date)
                                     <div class="meta-item">
                                         <span class="icon">⏰</span>
                                         <span>До {{ $survey->end_date->format('d.m.Y') }}</span>
                                     </div>
                                 @endif
-                                
+
                                 <div class="meta-item">
                                     <span class="icon">📊</span>
                                     <span>{{ $survey->responses_count }} {{ $survey->responses_count == 1 ? 'відповідь' : ($survey->responses_count < 5 ? 'відповіді' : 'відповідей') }}</span>
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="survey-actions">
                             @auth
                                 @if(isset($survey->user_completed) && $survey->user_completed)
@@ -125,8 +125,27 @@
     text-align: center;
     padding: 4rem 0;
     margin-bottom: 3rem;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1;
+}
+
+.hero .container {
+    position: relative;
+    z-index: 2;
+}
 .hero-content {
     max-width: 800px;
     margin: 0 auto;
@@ -343,14 +362,16 @@
     .hero h1 {
         font-size: 2rem;
     }
-    
+
     .surveys-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .survey-meta {
         grid-template-columns: 1fr;
     }
 }
 </style>
 @endpush
+
+
